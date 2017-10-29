@@ -1,0 +1,97 @@
+---2.56----------
+Lab machines (x86-64) : Little Endian
+My Machine (Ubuntu VM, 64-bit) : Little Endian
+PCP Machine: Big Endian
+
+---2.62----------
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char* argv[]);
+int int_shifts_are_arithmetic();
+
+int main(int argc, char* argv[]){
+
+    printf("\nShift result: %d \n\n",int_shifts_are_arithmetic());
+
+}
+
+
+int int_shifts_are_arithmetic(){
+
+    int x = -24;
+    if((x>>31) == -1) return 1;
+    return 0;
+
+}
+
+Results stated that all three machines listed above do arithmetic shifting
+
+---2.70----------
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+int main(int argc, char* argv[]);
+int fits_bits(int x, int n);
+
+int main(int argc, char* argv[]){
+
+    assert(fits_bits(-1,8));
+    assert(fits_bits(7,8));
+    assert(fits_bits(512,16));
+    assert(fits_bits(4,4));
+    assert(fits_bits(12,7));
+
+    
+    printf("\nThe bits fit!\n\n"); 
+
+}
+
+/*
+ * Return 1 when x can be represented as an n-bit, 2's comlement
+ * number; 0 otherwise
+ * Assume 1 <= n <= w
+*/
+int fits_bits(int x, int n){
+
+    // create mask
+    int mask = ~((1 << (n - 1)) - 1);
+    x &= mask;
+    return !x || x == mask; 
+
+}
+
+
+
+---2.82----------
+A) Always true. If x is a smaller positive value, then it will always be a
+   larger negative value.
+
+B) Not always true. Shifting could result in loss of significant bits. i.e. 
+   on a 32 bit machine using two's compliment the binary number 2^30 for x
+   and y.
+
+C) Not always true. ~(1100) + ~(1100) != ~(11000)
+
+D) Always true. Signs and unsigned bit patterns are identical.
+
+E) Always true. Clearing the least significant bits will always result
+   in a number that is less than the original.
+
+
+---2.89----------
+A) Always true. Since x is an integer, and a double only increases the
+   precision of the number and not the max number, we don't need to
+   worry about the added precision. Both will be rounded the same way.
+
+B) Not always true. x = 0 and y = MIN_INT
+
+C) Not always true. If dx, dy, or dz have a maximum value, it could result
+   in overflow.
+
+D) Not always true. Again, we have to worry about overflow with dx, dy, and dz
+   if they have too high of values.
+
+E) Not always true. dx = 0.0 or dz = 0.0 leads to a division by 0, or NaN
+

@@ -1,0 +1,60 @@
+EXPERIMENTATION --------------------------------------------------------
+
+./echoserverp 5555
+
+After two "nc localhost 5555" processes:
+There are three processes running, one is the initial parent server, and the other two were
+by the main server. The ppid of the two child processes is the pid of the initial server. Each
+process is only running one thread, and its thread id is the same as the pid of the process.
+
+After the third "nc localhost 5555" is run:
+The result is the same as above. A third process is run, with a ppid of the initial server
+process, and the thread id is the same as the pid.
+
+
+
+./echoservert 5555
+
+After two "nc localhost 5555" processes:
+There is one server running with three threads, one for each connection to a client. The pid and
+ppids are the same for all the threads, and the first thread (the "main thread" or initial server
+process) has a thread id equal to the initial pid.
+
+After the third "nc localhost 5555" is run:
+A fourth thread is now present, with a new thread ID but the same pid. The server process is spawning new threads
+with every new client connection. Interestingly the number of bytes potentially used
+by the process has increased (by almost 10%).
+
+All of the threads are acting as producer and consumers in the sense that they all individually
+create and manage all of their own work.
+
+
+
+./echoservert_pre 5555
+
+After two "nc localhost 5555" processes:
+There are currently five threads running in the same processes. It would appear that the
+main thread is the initial server processes, and that for every connection two new threads
+are created. One thread is most likely keeping track of the total number of bytes sent
+to the server while the other is sending respones back to the client.
+
+After the third "nc localhost 5555" process:
+Well my assumptions from the part above are wrong...there are still only five threads running
+even after a new client is connected. The pid and the ppids are the same, but each has its
+own thread id. This indicates that there is one producer thread in the main program and 
+(since this server represents a thread pool) there is a pool of 4 worker threads that are
+available to handle clients produced by the main thread.
+
+
+
+CODE ANALYSIS -----------------------------------------------------------
+
+4.a)	Line 35 represents the producer role. There is one producer thread.
+
+4.b)	Line 43 acts as the consumer role. There are 4 consumer (or worker) threads.
+
+5.a)	On line 30, if the slot member is zero the producer thread will wait until 
+	the consumer thread frees a slot.
+
+5.b)	If a single consumer thread is sleeping at line 43, the V() call at line 34
+	will wake it up (signal from producer that an item is available)

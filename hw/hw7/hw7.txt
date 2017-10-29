@@ -1,0 +1,74 @@
+BASIC QUESTIONS -------------------------------------------------
+
+1.a)	A successful call to connect() using udp_sock opens a connection that
+	allows sending of datagrams. The connectio will be less reliable in sending
+	data because the data has the potential to be modified in the process, and
+	it also may arrive at the destination in a different order than was originally
+	intended. This is because the socket was created using SOCK_DGRAM. The connection
+	is good for small packets of data.
+
+1.b)	A successful call to connect() using tcp_sock will open up a connection
+	where data can be read and written in two-way communication. SOCK_STREAM
+	indicates that the socket is an endpoint for a connection. The connection-based
+	byte streams will be sequenced and much more reliable than the udp_sock connection.
+	(i.e. data will not be lost or duplicated). The connection is good for large transfers
+	of data. If the connection is lost witout being closed, it will automatically try
+	to reconnect. Once the socket is closed, the connection will be dropped.
+
+2.a)	A successful call to bind() using udp_sock will associate a server-side socket address
+	with the given socket descriptor. The socket will then be able to receive UDP data
+	from a client that is successfully connected to the socket address
+
+2.b)	A successful call to bind() using tcp_sock will also associate a server-side socket
+	address with a socket descriptor, but it will allow information to be sent and received
+	autonomosly in a sequential and reliable way.
+
+3)	Answer: c
+	You should ALWAYS call close() on your socket per good programming practive. That said,
+	you technically do not need to close the connection to a UDP socket. A TCP server will
+	close when close() is called (this is what I found as I ran the experiments below).
+
+
+
+EXPERIMENTATION --------------------------------------------------
+
+4.a)	There are no bytes sent to the server when the connection is established. You
+	are just registering with the server so that data can be sent later
+
+4.b)	Only one UDP packet is created for each call to send. It is sent by the client
+	to the server. No response is given by the server because UDP is 'connectionless'.
+
+5.a)	There are bytes sent to the server for a TCP connection. This is because once a TCP
+	connection is establish, the line needs to be open for communication between the 
+	two sockets, so to ensure that the connection is stable data must be sent and
+	received. If this is successful then the TCP connection is considered established.
+
+5.b)	There are three TCP packets created for each call to send. The first sends the
+	data to the server. The second is a response from the server, and the third is
+	a response to the server from the client.
+
+6.a)	With a buffer size of 5, anything sent by the server greater than 5 bytes is cut off
+	and the rest is lost for a UDP connection. There is also no response from the client to
+	the server once the data has been received.
+	Example: server sends 'goodbye' and the client prints 'goodb'
+
+6.b)	With a buffer size of 5, anything sent by the server that is greater than 5 bytes is
+	read during the next pass of the loop. All data is transfered sequentially. When the
+	client receives data from the server, it sends a response to the server to indicate
+	it has received the data. The server also responds to this response (I'm assuming to
+	indicate that the connection is still available).
+	Example: server sends 'goodby' and the client prints 'goodb' and then 'ye'
+
+6.c)	UDP example: DNS resolving (stubbing) - when you want to send a small amount of data
+	quickly and don't have a lot to send; much more efficient because the server doesn't
+	have to keep track of a connection (UDP is connectionless)
+	
+	TCP example: instant messaging - the sequence and preservation of the data is very
+	important; you don't want anything lost
+
+7)	You cannot receive data after close() has been called for TCP or UDP sockets. You get the
+	error "Bad file descriptor" when you try to call recv() (this is client side)
+
+8)	You can receive data after the remote host (server) has been closed for UDP and TCP
+	connections.
+	

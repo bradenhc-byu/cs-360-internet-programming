@@ -1,0 +1,110 @@
+3.58 ------------------
+
+x in %rdi
+y in %rsi
+z in %rdx
+
+long decode2(long x, long y, long z){
+
+	return (((y - z) * x)<<63>>63)^x;
+
+}
+
+
+3.60 ------------------
+
+long loop(long x , long n){
+	
+	long result = 0;
+	long mask;
+	for(mask = 1; mask != 0; mask = (n&0xFF)<<mask){
+		
+		result |= (x&mask);
+		
+	}
+	return result;
+}
+
+A)
+
+x 		%rdi
+n 		%esi (%rdi)
+result 		%edx (%rdx)
+mask 		%eax (%rax)
+
+
+B)
+
+result = 0;
+mask = 1;
+
+C)
+
+Test Condition for mask: mask & mask, or mask != 0
+
+D)
+
+Increment mask by: (n&0xFF)<<mask
+
+E)
+
+Result gets updated by anding x with the mask and then oring the result with the previous result
+(result |= (x&mask))
+
+F)
+
+See the above code
+
+3.62 ------------------
+
+typedef enum {MODE_A, MODE_B, MODE_C, MODE_D, MODE_E} mode_t;
+
+long switch3(long *p1, long* p2, mode_t action){
+	
+	long result = 0;
+	switch(action){
+		
+		case MODE_A:	result = *p2;
+				*p2 = *p1;
+				break;
+				
+		case MODE_B:	result = *p1;
+				*p1 = *p2;
+				break;
+
+		case MODE_C:	*p1 = 59;
+				result = *p2;
+				break;
+
+		case MODE_D:	result = *p2;
+				*p1 = result;
+
+		case MODE_E:	result = 27;
+				break;
+
+		default:	result = 12;
+				break;
+
+		
+	}
+	
+	return result;
+
+}
+
+
+3.70 ------------------
+
+A)	e1.p : 64 bits => offset = 0 bytes
+	e1.y : 64 bits => offset = 8 bytes
+	e2.x : 64 bits => offset = 0 bytes
+	e2.next : 64 bits => offset = 8 bytes //address of another union (on 64 bit machine)
+
+B)	Total bytes = 32 bytes
+
+C)	void proc(union ele *up){
+		
+		up->next->y = *(up->next->p) - up->x;
+
+	}
+

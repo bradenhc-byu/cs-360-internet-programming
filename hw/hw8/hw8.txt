@@ -1,0 +1,81 @@
+EXPERIMENTATION ---------------------------------------------------------
+
+./echoserveri 5555
+
+The server will only respond to the first connection. It does not respond
+to the other send() commands from the other two nc processes. The server
+is only responsive to the first connection.
+
+Running 'ps' showed that only one process was running for this server, and it
+only uses 8,656 bytes of virtual memory and 1,880 bytes of resident memory.
+Thus it only uses 10,536 bytes of memory.
+
+When 'Ctrl+C' is used to terminate the first window, the second window
+receives the echo of the original input. Killing the server also kills the
+other 'nc' processes in the other two windows.
+
+
+
+./echoserverp 5555
+
+The server connects to all three 'nc' processes and will echo anything sent
+from those processes. The server is responsive to all three.
+
+Runing the 'ps' command shows that four processes are running. There is the
+initial parent process, along with a child process for each connection
+made to the server. It appears that the programming fork()'s every time
+it receive a connection request from a client so that it can handle multiple
+requests. All the processes use 6,536 bytes of virtual memory, but the parent
+process uses 732 bytes of resident memory and each child process uses 116
+bytes. Thus total memory in use is 27,224 bytes.
+
+When the first client is terminated, nothing visible happens on the server
+or with the other clients. When you kill the server, both of the other clients
+are also closed.
+
+
+
+./echoservers 5555
+
+All three clients are able to connect to this server, and when bytes are
+sent to the server, the server keeps track of the total number of bytes sent
+to the server from any of it's connections. In order to do this, you cannot
+fork the server, so it must be doing something else. The server is responsive
+to all three clients.
+
+Running the 'ps' command confirms the assumption of not using fork() above. 
+Only one process is running, and it uses 14,752 bytes of virtual memory and
+only 776 bytes of resident memory. Thus the total memory usage is 15,528.
+
+Closing the first client does nothing to the server or the other two clients.
+No output is displayed. Killing the server does the same thing as the other
+two servers. It also closes the remaining clients.
+
+
+
+PROS AND CONS (CONCLUSIONS) -------------------------------------------------
+
+./echoserveri
+
+PRO - Limits the number of connections to the server, so low use of memory and high process
+      speeds. Good for very short, one time connections.
+
+CON - Cannot handle multiple connections, any requests coming from additional sockets
+      will be delayed, causing latency in the client side program
+
+./echoserverp
+
+PRO - Allows for multiple connections. Very fast.
+
+CON - Takes up a lot of memory, so you can't have too many connections or else you
+      will crash the program. Forking so many processes also requires that each one be killed
+      when the initial parent process closes (lots of overhead), and you might miss one.
+
+./echoservers
+
+PRO - Allows for multiple connections. Does not fork the processes, so memory usage is
+      extremely low and the process is still fast.
+
+CON - Requires a bit more overhead to manage all of the connections on a single process,
+      so overall server speed could be slower. Resetting the server will reset all connections,
+      as opposed to only closing and restarting connections that are buggy.
