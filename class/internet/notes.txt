@@ -1,0 +1,36 @@
+UDP ===============================================================================
+	
+	socket()	- returns an "integer" that points to a kernel socket structure
+			- the kernel has a structure called socket that is really big
+			- the return value is mapped to the pointer, and the kernel keeps
+			  track of which processes have access to which sockets
+
+	close()		- takes the socket as a param
+			- frees up the socket structure in the kernel
+			
+	connect()	- optional here
+			- nice if you are using the same server and socket, cause it remembers
+			  the address
+
+	sendto()	- 
+
+	recvfrom()	-
+
+	recv()		- read
+
+	send()		- write
+
+	sendmsg()	- 
+
+
+TCP ==============================================================================
+	
+	socket()	- (same as above)
+	
+	close()		- (same as above)
+
+	connect()	- 
+
+	recv()		-
+
+	send()		-

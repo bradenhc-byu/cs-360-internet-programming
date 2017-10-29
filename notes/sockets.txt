@@ -1,0 +1,17 @@
+(protocol, source address, source port, destination address, destination port)
+
++ This will always uniquely identify a connection
+
+
+
+FUNCTIONS TO REMEMBER
+
+int socket() - creates a socket
+
+connect() - connects the socket to the given address/port
+
+bind() - sets the source address and port (called after the socket is made)
+
+listen() - converts the socket into a listening socket...waits for others to connect
+
+accept() - always used with listen...it allows a client

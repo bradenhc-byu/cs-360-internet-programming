@@ -1,0 +1,193 @@
+----------LEVEL 0-----------------
+bandit0@melinda:~$ ls  
+readme
+bandit0@melinda:~$ cat readme
+boJ9jbbUNNfktd78OOpsqOltutMc3MY1
+bandit0@melinda:~$ logout                          
+Connection to bandit.labs.overthewire.org closed.
+
+----------LEVEL 1------------------
+bandit1@melinda:~$ ls
+-
+bandit1@melinda:~$ cat ./- 
+CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
+bandit1@melinda:~$ logout
+Connection to bandit.labs.overthewire.org closed.
+
+----------LEVEL 2-------------------
+bandit2@melinda:~$ ls
+spaces in this filename
+bandit2@melinda:~$ cat ./"spaces in this filename"
+UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
+bandit2@melinda:~$ logout
+Connection to bandit.labs.overthewire.org closed.
+
+----------LEVEL 3-------------------
+bandit3@melinda:~$ ls
+inhere
+bandit3@melinda:~$ cd inhere
+bandit3@melinda:~/inhere$ ls
+bandit3@melinda:~/inhere$ ls -a
+.  ..  .hidden
+bandit3@melinda:~/inhere$ cat ./.hidden
+pIwrPrtPN36QITSp3EQaw936yaFoFgAB
+bandit3@melinda:~/inhere$ logout
+Connection to bandit.labs.overthewire.org closed.
+
+----------LEVEL 4-------------------
+bandit4@melinda:~$ ls
+inhere
+bandit4@melinda:~$ find ./inhere -type f | xargs file | grep text
+./inhere/-file07: ASCII text
+bandit4@melinda:~$ cat ./inhere/-file07
+koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+bandit4@melinda:~$ logout
+Connection to bandit.labs.overthewire.org closed.
+
+----------LEVEL 5----------------------
+bandit5@melinda:~$ ls
+inhere
+bandit5@melinda:~$ find ./inhere/ -size 1033c ! -executable | xargs file | grep text
+./inhere/maybehere07/.file2: ASCII text, with very long lines
+bandit5@melinda:~$ cat ./inhere/maybehere07/.file2
+DXjZPULLxYr17uwoI01bNLQbtFemEgo7
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+bandit5@melinda:~$ logout
+Connection to bandit.labs.overthewire.org closed.
+
+----------LEVEL 6 ---------------------
+bandit6@melinda:~$ find / -size 33c -user bandit7 -group bandit6 | xargs file | grep text
+find: `/root': Permission denied
+find: `/proc/tty/driver': Permission denied
+find: `/proc/28686/task/28686/fd/5': No such file or directory
+find: `/proc/28686/task/28686/fdinfo/5': No such file or directory
+find: `/proc/28686/fd/5': No such file or directory
+find: `/proc/28686/fdinfo/5': No such file or directory
+find: `/etc/krypton_pass': Permission denied
+find: `/etc/chatscripts': Permission denied
+find: `/etc/natas_session_toucher': Permission denied
+find: `/etc/ssl/private': Permission denied
+find: `/etc/natas_pass': Permission denied
+find: `/etc/ppp/peers': Permission denied
+find: `/run/user/11007': Permission denied
+find: `/run/user/11020': Permission denied
+find: `/run/user/11022': Permission denied
+find: `/run/user/12000': Permission denied
+find: `/run/user/11018': Permission denied
+find: `/run/user/11003': Permission denied
+find: `/run/user/11002': Permission denied
+find: `/run/user/11013': Permission denied
+find: `/run/user/11021': Permission denied
+find: `/run/user/11014': Permission denied
+find: `/run/user/11017': Permission denied
+find: `/run/user/14004': Permission denied
+find: `/run/user/11004': Permission denied
+find: `/run/user/11026': Permission denied
+find: `/run/user/5022': Permission denied
+find: `/run/user/11011': Permission denied
+find: `/run/user/11015': Permission denied
+find: `/run/user/11025': Permission denied
+find: `/run/user/11008': Permission denied
+find: `/run/user/11005': Permission denied
+find: `/run/user/11001': Permission denied
+find: `/run/user/11024': Permission denied
+find: `/run/user/11000': Permission denied
+find: `/run/user/11016': Permission denied
+find: `/run/user/15006': Permission denied
+find: `/run/user/11019': Permission denied
+find: `/run/user/13005': Permission denied
+find: `/run/user/0': Permission denied
+find: `/run/user/11012': Permission denied
+find: `/run/user/16005': Permission denied
+find: `/run/user/15008': Permission denied
+find: `/run/user/16000': Permission denied
+find: `/run/user/14008': Permission denied
+find: `/run/user/14005': Permission denied
+find: `/run/user/5020': Permission denied
+find: `/run/user/14002': Permission denied
+find: `/run/user/14000': Permission denied
+find: `/run/user/12001': Permission denied
+find: `/run/user/12002': Permission denied
+find: `/run/shm': Permission denied
+find: `/tmp': Permission denied
+find: `/lost+found': Permission denied
+find: `/var/lib/sudo': Permission denied
+find: `/var/lib/php5': Permission denied
+find: `/var/lib/cron-apt/_-_etc_-_cron-apt_-_config': Permission denied
+find: `/var/lib/mysql': Permission denied
+find: `/var/lib/mysql-files': Permission denied
+find: `/var/cache/ldconfig': Permission denied
+find: `/var/log': Permission denied
+find: `/var/lock': Permission denied
+find: `/var/crash': Permission denied
+find: `/var/spool/cron/atspool': Permission denied
+find: `/var/spool/cron/crontabs': Permission denied
+find: `/var/spool/cron/atjobs': Permission denied
+find: `/var/spool/rsyslog': Permission denied
+find: `/var/spool/bandit24': Permission denied
+find: `/var/tmp': Permission denied
+find: `/var/www/melinda/stats': Permission denied
+find: `/var/www/natas/natas11': Permission denied
+find: `/var/www/natas/natas33': Permission denied
+find: `/var/www/natas/natas31': Permission denied
+find: `/var/www/natas/natas25': Permission denied
+find: `/var/www/natas/natas9': Permission denied
+find: `/var/www/natas/natas22': Permission denied
+find: `/var/www/natas/natas17': Permission denied
+find: `/var/www/natas/natas3': Permission denied
+find: `/var/www/natas/natas30': Permission denied
+find: `/var/www/natas/natas20': Permission denied
+find: `/var/www/natas/natas29': Permission denied
+find: `/var/www/natas/natas14': Permission denied
+find: `/var/www/natas/natas19': Permission denied
+find: `/var/www/natas/natas21-experimenter': Permission denied
+find: `/var/www/natas/natas32': Permission denied
+find: `/var/www/natas/natas21': Permission denied
+find: `/var/www/natas/natas28': Permission denied
+find: `/var/www/natas/natas6': Permission denied
+find: `/var/www/natas/natas7': Permission denied
+find: `/var/www/natas/natas10': Permission denied
+find: `/var/www/natas/natas13': Permission denied
+find: `/var/www/natas/natas26': Permission denied
+find: `/var/www/natas/stats': Permission denied
+find: `/var/www/natas/natas24': Permission denied
+find: `/var/www/natas/natas0': Permission denied
+find: `/var/www/natas/natas15': Permission denied
+find: `/var/www/natas/natas8': Permission denied
+find: `/var/www/natas/natas12': Permission denied
+find: `/var/www/natas/natas27': Permission denied
+find: `/var/www/natas/natas18': Permission denied
+find: `/var/www/natas/natas16': Permission denied
+find: `/var/www/natas/natas2': Permission denied
+find: `/var/www/natas/natas5': Permission denied
+find: `/var/www/natas/natas4': Permission denied
+find: `/var/www/natas/natas23': Permission denied
+find: `/var/www/natas/natas1': Permission denied
+find: `/drifter/drifter14_src/axTLS': Permission denied
+find: `/home/bandit5/inhere': Permission denied
+find: `/home/leviathan0/.backup': Permission denied
+find: `/home/drifter6/data': Permission denied
+find: `/home/leviathan4/.trash': Permission denied
+find: `/home/drifter8/chroot': Permission denied
+find: `/sys/kernel/debug': Permission denied
+/var/lib/dpkg/info/bandit7.password: ASCII text
+bandit6@melinda:~$ cat /var/lib/dpkg/info/bandit7.password
+HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
+bandit6@melinda:~$ logout
+Connection to bandit.labs.overthewire.org closed.
+
+----------LEVEL 7-----------------------
+bandit7@melinda:~$ ls
+data.txt
+bandit7@melinda:~$ cat data.txt | grep millionth
+millionth	cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+bandit7@melinda:~$ logout
+Connection to bandit.labs.overthewire.org closed.
+
+----------LEVEL 8-----------------------
+bandit8@melinda:~$ sort data.txt | uniq -u
+UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
+bandit8@melinda:~$ logout
+Connection to bandit.labs.overthewire.org closed.
+
+

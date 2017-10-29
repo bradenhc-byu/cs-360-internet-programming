@@ -1,0 +1,50 @@
+REGISTERS
+rax = 0xDEAD
+rdx = 0x10
+rdi = 0x08
+rsi = 0x18
+
+MAIN MEMORY
+0x00	0xDEAD
+0x08	0xAE
+0x10	0x1337
+0x18	0xBEEF
+
+ASSEMBLY CODE
+movq (%rdi),%rax
+movq (%rsi),%rdx
+movq %rdx,(%rdi)
+movq %rax, (%rsi)
+retq
+-------------------------------------------------------------------------
+
+AFTER RUNNING THE FUNCTION
+
+REGISTERS
+rax = 0xAE
+rdx = 0xBEEF
+rdi = 0x08
+rsi = 0x18
+
+
+MAIN MEMORY
+0x00    0xDEAD
+0x08    0xBEEF  
+0x10    0x1337
+0x18    0xAE
+-------------------------------------------------------------------------
+
+EQUIVALENT C CODE
+
+void func(long* xp, long* yp){
+
+    long result;    // rax
+    long temp;      // rdx
+
+    result = *yp;
+    temp = *xp;
+    *yp = temp;
+    *xp = result;
+    
+    return;
+}
