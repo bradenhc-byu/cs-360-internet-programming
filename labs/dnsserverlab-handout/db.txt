@@ -1,0 +1,5 @@
+example.com 30 IN A 192.0.2.1
+bar.net 60 IN A 192.0.2.2
+foo.com 60 IN CNAME test.foo.com
+test.foo.com 60 IN CNAME append.foo.com
+append.foo.com 60 IN A 192.0.2.3

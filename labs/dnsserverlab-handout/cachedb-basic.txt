@@ -1,0 +1,2 @@
+example.com 30 IN A 192.0.2.1
+bar.com 30 IN A 192.0.2.2
